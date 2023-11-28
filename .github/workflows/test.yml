@@ -1,0 +1,25 @@
+name: Tiny workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-run:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: test
+        run: |
+          echo ${{ secrets.SLACK_WEBHOOK }}
+      -
+        name: Run add-merged-label
+        uses: tosite/idle-destroyer-actions@v0.0
+        with:
+          action: notify
+          repo: 'tosite/nicocale.php'
