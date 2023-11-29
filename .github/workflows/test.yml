@@ -17,7 +17,7 @@ jobs:
           echo ${{ secrets.SLACK_WEBHOOK }}
       -
         name: Run add-merged-label
-        uses: tosite/idle-destroyer-actions@v0.32
+        uses: tosite/idle-destroyer-actions@v0.33
         with:
           action: notify
           slackWebhook: ${{ secrets.SLACK_WEBHOOK }}
