@@ -17,8 +17,9 @@ jobs:
           echo ${{ secrets.SLACK_WEBHOOK }}
       -
         name: Run add-merged-label
-        uses: tosite/idle-destroyer-actions@v0.35
+        uses: tosite/idle-destroyer-actions@v0.36
         with:
           action: notify
           slackWebhook: ${{ secrets.SLACK_WEBHOOK }}
           repo: 'tosite/nicocale.php'
+          ignoreLabels: 'バグ修正'
