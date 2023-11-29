@@ -17,9 +17,19 @@ jobs:
           echo ${{ secrets.SLACK_WEBHOOK }}
       -
         name: Run add-merged-label
-        uses: tosite/idle-destroyer-actions@v0.37
+        uses: tosite/idle-destroyer-actions@v0.38
         with:
           action: notify
           slackWebhook: ${{ secrets.SLACK_WEBHOOK }}
           repo: 'tosite/nicocale.php'
           ignoreLabels: 'バグ修正'
+          notifyTemplate: |
+            <@U05KQKFUW12>
+            The next target is the one that will be automatically closed since %LIMIT% days have elapsed.
+            If you do not want to delete it, give it a label (%IGNORE_LABELS%).
+      
+            *Will close issues*
+            %ISSUES%
+      
+            *Will close pull_requests*
+            %PULLS%
