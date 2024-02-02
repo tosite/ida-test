@@ -1,0 +1,21 @@
+name: Tiny workflow
+
+on:
+  push:
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create issue from file
+        id: create_issue
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: 'テストだよ'
+          content-filepath: ./example-content/output.md
+      - name: Create project card
+        uses: peter-evans/create-or-update-project-card@v2
+        with:
+          project-name: 'test-project'
+          column-name: 'テストだよ'
+          issue-number: ${{ steps.create_issue.outputs.issue-number }}
