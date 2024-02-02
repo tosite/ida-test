@@ -21,17 +21,8 @@ jobs:
         run: |
           gh --version
           gh api graphql -f query='
-            query{
-              user(login: "tosite"){
-              projectV2(number: 1) {
-                id
-              }
-            }
-          }'
-
-          gh api graphql -f query='
             mutation {
-              addProjectV2ItemById(input: {projectId: "1" contentId: "5"}) {
+              addProjectV2ItemById(input: {projectId: "PVT_kwHOAXzAhM4Ab_pK" contentId: "5"}) {
                 item {
                   id
                 }
