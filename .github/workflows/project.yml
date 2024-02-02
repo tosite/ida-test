@@ -19,5 +19,5 @@ jobs:
         uses: peter-evans/create-or-update-project-card@v2
         with:
           project-name: 'test-project'
-          column-name: 'Status'
+          column-name: 'No Status'
           issue-number: ${{ steps.create_issue.outputs.issue-number }}
