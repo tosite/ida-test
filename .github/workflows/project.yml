@@ -9,25 +9,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-#      - name: Create issue from file
-#        id: create_issue
-#        uses: peter-evans/create-issue-from-file@v5
-#        with:
-#          title: 'テストだよ'
-#          content-filepath: ./example-content/output.md
+
       - name: Create project card
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh --version
-#          gh api graphql -f query='
-#            mutation {
-#              addProjectV2ItemById(input: {projectId: "PVT_kwHOAXzAhM4Ab_pK" contentId: "5"}) {
-#                item {
-#                  id
-#                }
-#              }
-#            }'
           gh api graphql -f query='
             mutation createIssue {
               createIssue(
