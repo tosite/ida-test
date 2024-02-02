@@ -19,5 +19,5 @@ jobs:
         uses: peter-evans/create-or-update-project-card@v2
         with:
           project-name: 'test-project'
-          column-name: 'テストだよ'
+          column-name: 'Title'
           issue-number: ${{ steps.create_issue.outputs.issue-number }}
