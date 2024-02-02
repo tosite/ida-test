@@ -17,7 +17,11 @@ jobs:
           gh --version
           gh api graphql -f query='
             mutation {
-              createIssue(input:{title: "Create issue from GraphQL", repositoryId :"R_kgDOKy8yng", projectIds:"PVT_kwHOAXzAhM4Ab_pK"}) {
+              createIssue(input:{
+                title: "Create issue from GraphQL", 
+                repositoryId :"R_kgDOKy8yng", 
+                projectIds:"PVT_kwHOAXzAhM4Ab_pK"}
+              ) {
                 issue {
                   id
                 }
