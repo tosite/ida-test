@@ -9,15 +9,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Create issue from file
-        id: create_issue
-        uses: peter-evans/create-issue-from-file@v5
-        with:
-          title: 'テストだよ'
-          content-filepath: ./example-content/output.md
+#      - name: Create issue from file
+#        id: create_issue
+#        uses: peter-evans/create-issue-from-file@v5
+#        with:
+#          title: 'テストだよ'
+#          content-filepath: ./example-content/output.md
       - name: Create project card
-        uses: peter-evans/create-or-update-project-card@v2
-        with:
-          project-name: 'test-project'
-          column-name: 'No Status'
-          issue-number: ${{ steps.create_issue.outputs.issue-number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh --version
