@@ -36,6 +36,25 @@ module IssueAutoCloser
       compressed_response(targets.flatten, now)
     end
 
+    def fetch_old_branches(limit_date:, now:)
+      page = 1
+      results = []
+      # loop do
+      response = conn.get('branches', { page: page, per_page: 2 }, @headers)
+      branches = JSON.parse(response.body)
+      branches.each do |branch|
+        branch_name = branch['name']
+        row = fetch_branch(branch_name:)
+        results << row
+      end
+      # end
+    end
+
+    def fetch_branch(branch_name:)
+      response = conn.get("branches/#{branch_name}", {}, @headers)
+      branch = JSON.parse(response.body)
+      {branch_name: branch_name, protected: branch['protected'], updated_at: DateTime.parse(branch['commit']['commit']['committer']['date'])}
+    end
     def close(row)
       uri = row[:is_pr] ? "pulls/#{row[:number]}" : "issues/#{row[:number]}"
       puts "REQUEST URL: #{@base_url}/#{uri}"
