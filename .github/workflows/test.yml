@@ -1,35 +1,58 @@
-#name: Tiny workflow
-#
-#on:
-#  push:
-#
-#jobs:
-#  test-run:
-#    permissions: write-all
-#    runs-on: ubuntu-latest
-#    steps:
-#      -
-#        name: Checkout
-#        uses: actions/checkout@v2
-#      -
-#        name: test
-#        run: |
-#          echo ${{ secrets.SLACK_WEBHOOK }}
-#      -
-#        name: Run add-merged-label
-#        uses: tosite/idle-destroyer-actions@v0.38
+name: Publish Drafts
+
+on:
+#  schedule:
+#    - cron: '0 0 * * *' # 毎日0時に実行
+#  workflow_dispatch:
+  push:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Run Ruby script
+        id: run_script
+        run: |
+          ruby script/publish_drafts.rb
+
+      - name: Commit changes
+        if: steps.run_script.outputs.changes == 'true'
+        run: |
+          git checkout -b $(date +'%Y%m%d')-publish
+          git add entry/*.md
+          git commit -m 'Publish drafts for $(date +'%Y-%m-%d')'
+          git push --set-upstream origin $(date +'%Y%m%d')-publish
+
+      - name: Create Pull Request
+        if: steps.run_script.outputs.changes == 'true'
+        id: create_pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: $(date +'%Y%m%d')-publish
+          title: 'Publish drafts for $(date +'%Y-%m-%d')'
+          body: 'This PR publishes drafts for $(date +'%Y-%m-%d').'
+
+#      - name: Send Slack notification
+#        if: steps.run_script.outputs.changes == 'true'
+#        uses: 8398a7/action-slack@v3
 #        with:
-#          action: notify
-#          slackWebhook: ${{ secrets.SLACK_WEBHOOK }}
-#          repo: 'tosite/nicocale.php'
-#          ignoreLabels: 'バグ修正'
-#          notifyTemplate: |
-#            <@U05KQKFUW12>
-#            The next target is the one that will be automatically closed since %LIMIT% days have elapsed.
-#            If you do not want to delete it, give it a label (%IGNORE_LABELS%).
-#
-#            *Will close issues*
-#            %ISSUES%
-#
-#            *Will close pull_requests*
-#            %PULLS%
+#          status: custom
+#          fields: repo,message,commit,author
+#          custom_payload: |
+#            {
+#              "text": "レビューお願いします: ${{ steps.create_pr.outputs.pull-request-url }}"
+#            }
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
