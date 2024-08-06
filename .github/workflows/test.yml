@@ -16,6 +16,8 @@ jobs:
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0' # 必要に応じてRubyのバージョンを指定
 
       - name: Install dependencies
         run: |
