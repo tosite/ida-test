@@ -23,7 +23,8 @@ jobs:
         id: run_script
         run: |
           ruby script/publish_drafts.rb >> $GITHUB_OUTPUT
-          branch_name=$(date +'%Y%m%d')-publish >> $GITHUB_OUTPUT
+          "branch_name=$(date +'%Y%m%d')-publish" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
 
       - name: Commit changes
         if: steps.run_script.outputs.changes == 'true'
