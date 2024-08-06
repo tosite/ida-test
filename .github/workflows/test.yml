@@ -25,13 +25,14 @@ jobs:
           ruby script/publish_drafts.rb >> $GITHUB_OUTPUT
 
       - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: steps.run_script.outputs.changes == 'true'
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          echo '==== pull ===='
-          git pull origin main
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@users.noreply.github.com'
           branch_name=$(date +'%Y%m%d')-publish
+
           echo '==== checkout ===='
           git checkout -b $branch_name
           echo '==== branch ===='
@@ -39,12 +40,11 @@ jobs:
           echo '==== status ===='
           git status
           echo '==== add ===='
-          git add entry/*.md
+          git add *.md
           echo '==== status ===='
           git status
           echo '==== commit ===='
           git commit -m 'Publish drafts'
-          git pull --rebase origin main
           echo '==== push ===='
           git push origin $branch_name
 
