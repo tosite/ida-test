@@ -25,30 +25,19 @@ jobs:
           ruby script/publish_drafts.rb >> $GITHUB_OUTPUT
 
       - name: Commit changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: steps.run_script.outputs.changes == 'true'
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
-          branch_name=$(date +'%Y%m%d')-publish
-
+#          branch_name=$(date +'%Y%m%d')-publish
           echo '==== checkout ===='
-          git fetch origin
-          git checkout -b $branch_name
-          echo '==== branch ===='
-          git branch
-          echo '==== status ===='
-          git status
-          echo '==== add ===='
+          git checkout -b publish
           git add *.md
-          echo '==== status ===='
-          git status
-          echo '==== commit ===='
           git commit -m 'Publish drafts'
-          git merge main
           echo '==== push ===='
-          git push origin $branch_name
+          git push origin publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         if: steps.run_script.outputs.changes == 'true'
