@@ -28,7 +28,7 @@ jobs:
         if: steps.run_script.outputs.changes == 'true'
         run: |
           git config --global user.name 'github-actions[bot]'
-          git pull origin/main --depth=1
+          git pull origin main --depth=1
           branch_name=$(date +'%Y%m%d')-publish
           git checkout -b $branch_name
           git add entry/*.md
