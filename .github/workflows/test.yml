@@ -27,8 +27,9 @@ jobs:
       - name: Commit changes
         if: steps.run_script.outputs.changes == 'true'
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git checkout -b $(date +'%Y%m%d')-publish
+          git config --global user.name 'github-actions'
+          branch_name=$(date +'%Y%m%d')-publish
+          git checkout -b $branch_name
           git add entry/*.md
           git commit -m 'Publish drafts for $(date +'%Y-%m-%d')'
           git push --set-upstream origin $(date +'%Y%m%d')-publish
