@@ -30,23 +30,22 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
-          echo $BRANCH_NAME
+          branch=${{ steps.run_script.outputs.branch_name }}
           echo '==== checkout ===='
-          git checkout -b $BRANCH_NAME
+          git checkout -b $branch
           git add *.md
           git commit -m 'Publish drafts'
           echo '==== push ===='
-          git push origin $BRANCH_NAME
+          git push origin $branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${{ steps.run_script.outputs.branch_name }}
 
       - name: Create Pull Request
         if: steps.run_script.outputs.changes == 'true'
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: "{{ steps.run_script.outputs.branch_name }}"
+          branch: "${{ steps.run_script.outputs.branch_name }}"
           title: 'Publish drafts'
           body: 'This PR publishes drafts.'
 
