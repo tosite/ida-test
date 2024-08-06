@@ -29,6 +29,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          echo '==== pull ===='
           git pull origin main
           branch_name=$(date +'%Y%m%d')-publish
           echo '==== checkout ===='
@@ -43,6 +44,7 @@ jobs:
           git status
           echo '==== commit ===='
           git commit -m 'Publish drafts'
+          git pull --rebase origin main
           echo '==== push ===='
           git push origin $branch_name
 
