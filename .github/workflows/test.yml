@@ -41,8 +41,8 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           branch: $(date +'%Y%m%d')-publish
-          title: 'Publish drafts for $(date +'%Y-%m-%d')'
-          body: 'This PR publishes drafts for $(date +'%Y-%m-%d').'
+          title: 'Publish drafts'
+          body: 'This PR publishes drafts.'
 
 #      - name: Send Slack notification
 #        if: steps.run_script.outputs.changes == 'true'
