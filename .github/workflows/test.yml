@@ -43,7 +43,7 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: $(date +'%Y%m%d')-publish
+          branch: publish
           title: 'Publish drafts'
           body: 'This PR publishes drafts.'
 
