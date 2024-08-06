@@ -34,6 +34,7 @@ jobs:
           branch_name=$(date +'%Y%m%d')-publish
 
           echo '==== checkout ===='
+          git fetch origin
           git checkout -b $branch_name
           echo '==== branch ===='
           git branch
@@ -45,6 +46,7 @@ jobs:
           git status
           echo '==== commit ===='
           git commit -m 'Publish drafts'
+          git merge origin main
           echo '==== push ===='
           git push origin $branch_name
 
