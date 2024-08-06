@@ -30,3 +30,4 @@ end
 
 # 変更があったかどうかを出力
 puts "changes=#{changes}"
+puts "branch_name=#{today.strftime('%Y%m%d')}-publish"
