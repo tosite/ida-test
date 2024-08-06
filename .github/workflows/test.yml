@@ -45,8 +45,8 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: 'main'
-          base: "${{ steps.run_script.outputs.branch_name }}"
+          base: 'origin/main'
+          branch: "${{ steps.run_script.outputs.branch_name }}"
           title: 'Publish drafts'
           body: 'This PR publishes drafts.'
 
