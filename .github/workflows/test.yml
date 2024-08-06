@@ -30,16 +30,16 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
-          branch_name={{ steps.run_script.outputs.branch_name }}
-          echo $branch_name
+          echo $BRANCH_NAME
           echo '==== checkout ===='
-          git checkout -b $branch_name
+          git checkout -b $BRANCH_NAME
           git add *.md
           git commit -m 'Publish drafts'
           echo '==== push ===='
-          git push origin $branch_name
+          git push origin $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: ${{ steps.run_script.outputs.branch_name }}
 
       - name: Create Pull Request
         if: steps.run_script.outputs.changes == 'true'
