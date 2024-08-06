@@ -28,12 +28,14 @@ jobs:
         if: steps.run_script.outputs.changes == 'true'
         run: |
           git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git pull origin main --depth=1
           branch_name=$(date +'%Y%m%d')-publish
           git checkout -b $branch_name
           git add entry/*.md
-          git commit -m 'Publish drafts for $(date +'%Y-%m-%d')'
-          git push --set-upstream origin $(date +'%Y%m%d')-publish
+          git status
+          git commit -m 'Publish drafts'
+          git push origin $branch_name
 
       - name: Create Pull Request
         if: steps.run_script.outputs.changes == 'true'
