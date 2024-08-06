@@ -29,13 +29,21 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git pull origin main --depth=1
+          git pull origin main
           branch_name=$(date +'%Y%m%d')-publish
+          echo '==== checkout ===='
           git checkout -b $branch_name
+          echo '==== branch ===='
           git branch
-          git add entry/*.md
+          echo '==== status ===='
           git status
+          echo '==== add ===='
+          git add entry/*.md
+          echo '==== status ===='
+          git status
+          echo '==== commit ===='
           git commit -m 'Publish drafts'
+          echo '==== push ===='
           git push origin $branch_name
 
       - name: Create Pull Request
