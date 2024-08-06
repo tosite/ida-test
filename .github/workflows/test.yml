@@ -22,7 +22,7 @@ jobs:
       - name: Run Ruby script
         id: run_script
         run: |
-          ruby script/publish_drafts.rb
+          ruby script/publish_drafts.rb >> $GITHUB_OUTPUT
 
       - name: Commit changes
         if: steps.run_script.outputs.changes == 'true'
