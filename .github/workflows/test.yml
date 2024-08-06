@@ -40,15 +40,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Pull Request
-        if: steps.run_script.outputs.changes == 'true'
-        id: create_pr
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: "${{ steps.run_script.outputs.branch_name }}"
-          title: 'Publish drafts'
-          base: 'main'
-          body: 'This PR publishes drafts.'
+#      - name: Create Pull Request
+#        if: steps.run_script.outputs.changes == 'true'
+#        id: create_pr
+#        uses: peter-evans/create-pull-request@v6
+#        with:
+#          branch: "${{ steps.run_script.outputs.branch_name }}"
+#          title: 'Publish drafts'
+#          base: 'main'
+#          body: 'This PR publishes drafts.'
 
 #      - name: Send Slack notification
 #        if: steps.run_script.outputs.changes == 'true'
