@@ -49,6 +49,9 @@ jobs:
           branch: "${{ steps.run_script.outputs.branch_name }}"
           title: 'Publish drafts'
           body: 'This PR publishes drafts.'
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 #      - name: Send Slack notification
 #        if: steps.run_script.outputs.changes == 'true'
