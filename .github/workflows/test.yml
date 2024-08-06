@@ -27,7 +27,7 @@ jobs:
       - name: Commit changes
         if: steps.run_script.outputs.changes == 'true'
         run: |
-          git config --global user.name 'github-actions'
+          git config --global user.name 'github-actions[bot]'
           branch_name=$(date +'%Y%m%d')-publish
           git checkout -b $branch_name
           git add entry/*.md
