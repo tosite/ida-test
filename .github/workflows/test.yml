@@ -19,11 +19,6 @@ jobs:
         with:
           ruby-version: '3.0' # 必要に応じてRubyのバージョンを指定
 
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
-
       - name: Run Ruby script
         id: run_script
         run: |
