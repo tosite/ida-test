@@ -26,6 +26,7 @@ jobs:
           echo $GITHUB_OUTPUT
           echo ${{ steps.run_script.outputs.branch_name }}
           echo ${{ steps.run_script.outputs.changes }}
+          cat /home/runner/work/_temp/_runner_file_commands/set_output_*
 
 #      - name: Commit changes
 #        if: steps.run_script.outputs.changes == 'true'
