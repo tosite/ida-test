@@ -25,31 +25,33 @@ jobs:
           ruby script/publish_drafts.rb >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
 
-      - name: Commit changes
-        if: steps.run_script.outputs.changes == 'true'
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@users.noreply.github.com'
-          branch=${{ steps.run_script.outputs.branch_name }}
-          echo '==== checkout ===='
-          git checkout -b $branch
-          git add *.md
-          git commit -m 'Publish drafts'
-          echo '==== push ===='
-          git push origin $branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Commit changes
+#        if: steps.run_script.outputs.changes == 'true'
+#        run: |
+#          git config --global user.name 'github-actions'
+#          git config --global user.email 'github-actions@users.noreply.github.com'
+#          branch=${{ steps.run_script.outputs.branch_name }}
+#          echo '==== checkout ===='
+#          git checkout -b $branch
+#          git add *.md
+#          git commit -m 'Publish drafts'
+#          echo '==== push ===='
+#          git push origin $branch
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         if: steps.run_script.outputs.changes == 'true'
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
-          base: 'main'
+#          base: 'main'
+          commit-message: 'Publish drafts'
           branch: "${{ steps.run_script.outputs.branch_name }}"
           title: 'Publish drafts'
           body: 'This PR publishes drafts.'
-          draft: true
+          delete-branch: true
+          reviewers: tosite
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
