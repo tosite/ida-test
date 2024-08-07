@@ -8,7 +8,7 @@ today = Date.today
 changes = false
 
 # entry 配下の *.md ファイルを取得
-Dir.glob('entry/**/*.md').each do |file|
+Dir.glob('entry/**/*.md').each_with_index do |file, index|
   content = File.read(file)
 
   # draft: true を含むファイルを抽出
@@ -16,6 +16,7 @@ Dir.glob('entry/**/*.md').each do |file|
     # date: 2024-01-04T01:00:00.000Z の日付部分を抽出
     if content =~ /date: (\d{4}-\d{2}-\d{2})T/
       date = Date.parse($1)
+      puts "file_#{index}=#{file}/#{$1}"
 
       # 日付が今日のものを抽出
       if date == today
