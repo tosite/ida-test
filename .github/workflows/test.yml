@@ -24,6 +24,8 @@ jobs:
         run: |
           ruby script/publish_drafts.rb >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
+          echo ${{ steps.run_script.outputs.branch_name }}
+          echo ${{ steps.run_script.outputs.changes }}
 
 #      - name: Commit changes
 #        if: steps.run_script.outputs.changes == 'true'
